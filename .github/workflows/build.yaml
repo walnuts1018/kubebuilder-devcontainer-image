@@ -1,7 +1,9 @@
 name: Build Docker Image
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   ImageBuild:
@@ -24,9 +26,6 @@ jobs:
         with:
           version: latest
 
-      - name: Get Tag from Release
-        run: echo "ImageTag=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
       - name: Build and push Docker images
         uses: docker/build-push-action@v6
         with:
@@ -38,4 +37,4 @@ jobs:
           build-args: TARGETOS=linux
           tags: |
             ghcr.io/walnuts1018/kubebuilder-devcontainer-image:latest
-            ghcr.io/walnuts1018/kubebuilder-devcontainer-image:${{ github.event.release.tag_name }}
+            ghcr.io/walnuts1018/kubebuilder-devcontainer-image:${{ github.sha }}-${{ github.run_number }}
