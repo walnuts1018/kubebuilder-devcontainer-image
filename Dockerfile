@@ -1,7 +1,14 @@
-FROM golang:1.23.4-bookworm
+FROM alpine:3.16 AS aqua
 
-RUN curl -Lo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64 && chmod +x /usr/local/bin/kind
+ENV AQUA_VERSION=v2.40.0
 
-RUN curl -L -o /usr/local/bin/kubebuilder https://go.kubebuilder.io/dl/latest/linux/amd64 && chmod +x /usr/local/bin/kubebuilder
+RUN apk add curl
 
-RUN KUBECTL_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt) && curl -L -o /usr/local/bin/kubectl "https://dl.k8s.io/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl" && chmod +x /usr/local/bin/kubectl
+RUN curl -sSfL https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.1.0/aqua-installer | sh -s -- -i /usr/local/bin/aqua -v AQUA_VERSION
+
+COPY aqua.yaml /aqua.yaml
+RUN aqua -c /aqua.yaml cp -o /dist actionlint reviewdog
+
+FROM golang:1.23.4-bookworm as runner
+
+COPY --from=aqua /dist/* /usr/local/bin/
