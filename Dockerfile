@@ -1,4 +1,4 @@
-FROM alpine:3.16 AS aqua
+FROM alpine:3.21 AS aqua
 
 ENV AQUA_VERSION=v2.40.0
 
