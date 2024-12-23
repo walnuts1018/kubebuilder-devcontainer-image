@@ -22,4 +22,16 @@
       datasourceTemplate: "github-tags",
     },
   ],
+  packageRules: [
+    {
+      matchUpdateTypes: ["patch"],
+      matchDatasources: ["github-tags", "docker"],
+      matchCurrentVersion: "!/^0/",
+      automerge: true,
+    },
+    {
+      matchPackageNames: ["aquaproj/aqua-registry"],
+      automerge: true,
+    },
+  ],
 }
