@@ -37,5 +37,5 @@ jobs:
           cache-to: type=gha,mode=max
           build-args: TARGETOS=linux
           tags: |
-            ghcr.io/walnuts1018/cloudflare-tunnel-operator:latest
-            ghcr.io/walnuts1018/cloudflare-tunnel-operator:${{ github.event.release.tag_name }}
+            ghcr.io/walnuts1018/kubebuilder-devcontaner-image:latest
+            ghcr.io/walnuts1018/kubebuilder-devcontaner-image:${{ github.event.release.tag_name }}
