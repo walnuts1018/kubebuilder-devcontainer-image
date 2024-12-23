@@ -13,5 +13,5 @@ COPY aqua.yaml /tmp/aqua.yaml
 COPY --from=aqua /opt/aqua/bin/aqua /usr/local/bin/aqua
 RUN --mount=type=cache,target=/go/pkg/mod/ \
     --mount=type=cache,target=/root/.cache/go-build,sharing=locked \
-    aqua i -a /aqua.yaml
+    aqua i -a /tmp/aqua.yaml
 RUN rm /tmp/aqua.yaml
