@@ -11,4 +11,6 @@ FROM golang:1.23.4-bookworm as runner
 ENV PATH=/root/.local/share/aquaproj-aqua/bin:$PATH
 COPY aqua.yaml /aqua.yaml
 COPY --from=aqua /opt/aqua/bin/aqua /usr/local/bin/aqua
-RUN aqua i -a /aqua.yaml
+RUN --mount=type=cache,target=/go/pkg/mod/ \
+    --mount=type=cache,target=/root/.cache/go-build,sharing=locked \
+    aqua i -a /aqua.yaml
