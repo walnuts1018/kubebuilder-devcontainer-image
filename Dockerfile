@@ -1,14 +1,14 @@
-FROM alpine:3.21 AS aqua
+FROM debian:bookworm-slim AS aqua
+ARG AQUA_VERSION=v2.40.0
+ENV AQUA_ROOT_DIR=/opt/aqua
 
-ENV AQUA_VERSION=v2.40.0
-
-RUN apk add curl
-
-RUN curl -sSfL https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.1.0/aqua-installer | sh -s -- -i /usr/local/bin/aqua -v AQUA_VERSION
-
-COPY aqua.yaml /aqua.yaml
-RUN aqua -c /aqua.yaml cp -o /dist actionlint reviewdog
+RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    apt-get -y update && apt-get install -y curl
+RUN curl -sSfL https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.1.0/aqua-installer | bash -s -- -v ${AQUA_VERSION}
 
 FROM golang:1.23.4-bookworm as runner
-
-COPY --from=aqua /dist/* /usr/local/bin/
+ENV PATH=/root/.local/share/aquaproj-aqua/bin:$PATH
+COPY aqua.yaml /aqua.yaml
+COPY --from=aqua /opt/aqua/bin/aqua /usr/local/bin/aqua
+RUN aqua i -a /aqua.yaml
