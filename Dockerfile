@@ -10,6 +10,8 @@ RUN curl -sSfL https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.1.0/
 FROM golang:1.23.4-bookworm as runner
 ENV PATH=/root/.local/share/aquaproj-aqua/bin:$PATH
 
+RUN go install github.com/cweill/gotests/gotests@v1.6.0
+
 COPY aqua.yaml /aqua.yaml
 COPY --from=aqua /opt/aqua/bin/aqua /usr/local/bin/aqua
 
