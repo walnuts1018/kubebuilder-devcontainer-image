@@ -1,5 +1,5 @@
 FROM debian:bookworm-slim AS aqua
-ARG AQUA_VERSION=v2.41.0
+ARG AQUA_VERSION=v2.42.2
 ENV AQUA_ROOT_DIR=/opt/aqua
 
 RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
