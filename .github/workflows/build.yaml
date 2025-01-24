@@ -37,4 +37,4 @@ jobs:
           build-args: TARGETOS=linux
           tags: |
             ghcr.io/walnuts1018/kubebuilder-devcontainer-image:latest
-            ghcr.io/walnuts1018/kubebuilder-devcontainer-image:${{ github.sha }}-${{ github.run_number }}
+            ghcr.io/walnuts1018/kubebuilder-devcontainer-image:v0.0.${{ github.run_number }}
