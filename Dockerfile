@@ -1,5 +1,5 @@
 FROM debian:bookworm-slim AS aqua
-ARG AQUA_VERSION=v2.45.1
+ARG AQUA_VERSION=v2.46.0
 ENV AQUA_ROOT_DIR=/opt/aqua
 
 RUN apt-get -y update && apt-get install -y curl
