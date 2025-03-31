@@ -1,6 +1,6 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: ["config:recommended", "github>aquaproj/aqua-renovate-config#2.7.5"],
+  extends: ["github>walnuts1018/renovate-config"],
   customManagers: [
     {
       customType: "regex",
