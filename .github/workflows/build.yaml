@@ -40,7 +40,7 @@ jobs:
         id: build
         with:
           context: .
-          file: go.Dockerfile
+          build-args: TARGETOS=linux
           platforms: ${{ matrix.platform }}
           outputs: type=image,name=ghcr.io/walnuts1018/kubebuilder-devcontainer-image,push-by-digest=true,name-canonical=true,push=true
           cache-from: type=gha,scope=${{ matrix.key }}
